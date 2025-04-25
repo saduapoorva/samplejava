@@ -10,21 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Java environment
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: '17'
-
-    # Build the JAR file
-    - name: Build with Gradle wrapper
-      run: ./gradlew build
-
 
     - name: Make gradlew executable
       run: chmod +x ./gradlew
@@ -32,7 +25,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    # Log in to Docker registry
     - name: Log in to Docker registry
       uses: docker/login-action@v2
       with:
@@ -40,7 +32,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # Build and push Docker image
     - name: Build and push Docker image
       run: |
         docker build -t ${{ secrets.DOCKER_REGISTRY }}/java-app:latest .
