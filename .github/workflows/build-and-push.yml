@@ -22,7 +22,7 @@ jobs:
         java-version: '17'
 
     # Build the JAR file
-    - name: Build with Gradle
+    - name: Build with Gradle wrapper
       run: ./gradlew build
 
     # Log in to Docker registry
