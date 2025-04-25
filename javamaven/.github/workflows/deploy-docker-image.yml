@@ -1,0 +1,19 @@
+name: Push Docker Image to Private Registry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login <private-registry-url> -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker tag sample-java-app:latest <private-registry-url>/sample-java-app:latest
+          docker push <private-registry-url>/sample-java-app:latest
